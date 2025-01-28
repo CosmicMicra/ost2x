@@ -7,6 +7,7 @@
 #include "fs.h"
 #include "sleeplock.h"
 #include "file.h"
+#include "pipe.h"
 
 #define PIPESIZE 512
 

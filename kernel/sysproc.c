@@ -5,6 +5,8 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "pipe.h"
+
 
 uint64
 sys_exit(void)

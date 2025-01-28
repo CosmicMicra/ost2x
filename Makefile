@@ -1,8 +1,8 @@
 K=kernel
 U=user
 
-include proj2/user/Makefile
-include proj2/kernel/Makefile
+-include proj2/user/Makefile
+-include proj2/kernel/Makefile
 
 
 OBJS = \
@@ -31,8 +31,10 @@ OBJS = \
 	$K/sysfile.o \
 	$K/kernelvec.o \
 	$K/plic.o \
+	$K/pipe.o \
 	$K/virtio_disk.o \
 proj2/kernel/calculate.o \
+proj2/user/pipe_ipc.o \
 
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
@@ -149,6 +151,10 @@ UPROGS=\
 
 proj2/kernel/calculate.o: proj2/kernel/calculate.c
 	$(CC) $(CFLAGS) -c -o proj2/kernel/calculate.o proj2/kernel/calculate.c
+
+
+proj2/user/pipe_ipc.o: proj2/user/pipe_ipc.c
+	$(CC)	$(CFLAGS) -c -o proj2/user/pipe_ipc.o proj2/user/pipe_ipc.c
 
 
 fs.img: mkfs/mkfs README $(UPROGS)
