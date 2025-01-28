@@ -1,34 +1,39 @@
 K=kernel
 U=user
 
+include proj2/user/Makefile
+include proj2/kernel/Makefile
+
+
 OBJS = \
-  $K/entry.o \
-  $K/start.o \
-  $K/console.o \
-  $K/printf.o \
-  $K/uart.o \
-  $K/kalloc.o \
-  $K/spinlock.o \
-  $K/string.o \
-  $K/main.o \
-  $K/vm.o \
-  $K/proc.o \
-  $K/swtch.o \
-  $K/trampoline.o \
-  $K/trap.o \
-  $K/syscall.o \
-  $K/sysproc.o \
-  $K/bio.o \
-  $K/fs.o \
-  $K/log.o \
-  $K/sleeplock.o \
-  $K/file.o \
-  $K/pipe.o \
-  $K/exec.o \
-  $K/sysfile.o \
-  $K/kernelvec.o \
-  $K/plic.o \
-  $K/virtio_disk.o
+	$K/entry.o \
+	$K/start.o \
+	$K/console.o \
+	$K/printf.o \
+	$K/uart.o \
+	$K/kalloc.o \
+	$K/spinlock.o \
+	$K/string.o \
+	$K/main.o \
+	$K/vm.o \
+	$K/proc.o \
+	$K/swtch.o \
+	$K/trampoline.o \
+	$K/trap.o \
+	$K/syscall.o \
+	$K/sysproc.o \
+	$K/bio.o \
+	$K/fs.o \
+	$K/log.o \
+	$K/sleeplock.o \
+	$K/file.o \
+	$K/exec.o \
+	$K/sysfile.o \
+	$K/kernelvec.o \
+	$K/plic.o \
+	$K/virtio_disk.o \
+proj2/kernel/calculate.o \
+
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin
@@ -138,8 +143,13 @@ UPROGS=\
 	$U/_usertests\
 	$U/_grind\
 	$U/_wc\
-    $U/_zombie\
-    $U/_pipe_ipc\
+	$U/_zombie\
+	proj2/user/pipe_ipc\
+	$U/_calc\
+
+proj2/kernel/calculate.o: proj2/kernel/calculate.c
+	$(CC) $(CFLAGS) -c -o proj2/kernel/calculate.o proj2/kernel/calculate.c
+
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
@@ -151,7 +161,7 @@ clean:
 	*/*.o */*.d */*.asm */*.sym \
 	$U/initcode $U/initcode.out $K/kernel fs.img \
 	mkfs/mkfs .gdbinit \
-        $U/usys.S \
+		$U/usys.S\
 	$(UPROGS)
 
 # try to generate a unique GDB port
